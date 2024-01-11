@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce6v3b34aba8j"]
+
+[ext_resource type="Texture2D" uid="uid://eb2ep7u0pbn3" path="res://Assets/objects/atk_buff.png" id="1_7linq"]
+[ext_resource type="Texture2D" uid="uid://bek1qfequo1xp" path="res://Assets/objects/progress.png" id="2_ugwxv"]
+[ext_resource type="Script" path="res://Scenes/progressBar.gd" id="3_ibg2r"]
+
+[node name="ProgressBar" type="TextureProgressBar"]
+z_index = 100
+offset_left = -6.0
+offset_top = -7.0
+offset_right = 966.0
+offset_bottom = 947.0
+scale = Vector2(0.0140017, 0.0140017)
+max_value = 60.0
+step = 0.1
+value = 60.0
+fill_mode = 4
+texture_under = ExtResource("1_7linq")
+texture_progress = ExtResource("2_ugwxv")
+texture_progress_offset = Vector2(-20, -40)
+tint_progress = Color(0.215686, 0.215686, 0.215686, 0.764706)
+script = ExtResource("3_ibg2r")
+
+[node name="SecondsTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="SecondsTimer" to="." method="_on_seconds_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

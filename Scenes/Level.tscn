@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://u8f5burbnhbs"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_mu1uh"]
+[ext_resource type="PackedScene" uid="uid://bo80n1q4446kf" path="res://Scenes/UI.tscn" id="2_r3cau"]
+[ext_resource type="PackedScene" uid="uid://7mc83vqkbmqt" path="res://Scenes/player.tscn" id="3_pp3l6"]
+
+[node name="Level" type="Node2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_mu1uh")
+
+[node name="UI" parent="." instance=ExtResource("2_r3cau")]
+z_index = 100
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -61.3333
+offset_top = -29.0
+offset_right = -61.3333
+offset_bottom = -29.0
+grow_vertical = 1
+size_flags_horizontal = 0
+
+[node name="player" parent="." instance=ExtResource("3_pp3l6")]
+coins = 1
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+scale = Vector2(1.5, 1.5)
+zoom = Vector2(1.5, 1.5)
+
+[connection signal="amplifier_added" from="player" to="UI" method="_on_player_amplifier_added"]
+[connection signal="amplifier_removed" from="player" to="UI" method="_on_player_amplifier_removed"]
+[connection signal="coins_changed" from="player" to="UI" method="change_coins"]
+[connection signal="health_changed" from="player" to="UI" method="_on_player_health_changed"]
+[connection signal="tree_exited" from="player" to="UI" method="_on_player_tree_exited"]

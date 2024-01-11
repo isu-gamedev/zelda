@@ -1,0 +1,165 @@
+[gd_scene load_steps=18 format=3 uid="uid://blwovr5foy6ph"]
+
+[ext_resource type="Script" path="res://Scripts/pickable.gd" id="1_288jd"]
+[ext_resource type="Texture2D" uid="uid://iscwsu2f431j" path="res://Assets/objects/MonedaD.png" id="1_jbffx"]
+[ext_resource type="Texture2D" uid="uid://nfwxhbuvrcxi" path="res://Assets/objects/PotionsPack1.png" id="2_fqqvy"]
+[ext_resource type="FontFile" uid="uid://mauvi3vqxtnb" path="res://Assets/fonts/EightBits.ttf" id="4_hkwvs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gasf"]
+atlas = ExtResource("2_fqqvy")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve1mw"]
+atlas = ExtResource("1_jbffx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw0yn"]
+atlas = ExtResource("1_jbffx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laqrb"]
+atlas = ExtResource("1_jbffx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s42jj"]
+atlas = ExtResource("1_jbffx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uv1i"]
+atlas = ExtResource("1_jbffx")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jds2s"]
+atlas = ExtResource("2_fqqvy")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ll0xv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0gasf")
+}],
+"loop": true,
+"name": &"atk_potion",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve1mw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw0yn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laqrb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s42jj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uv1i")
+}],
+"loop": true,
+"name": &"coin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jds2s")
+}],
+"loop": true,
+"name": &"hp_potion",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vo5gv"]
+
+[sub_resource type="Animation" id="Animation_p3g3g"]
+resource_name = "dropping"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2.38419e-07, -17), Vector2(0, 13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_mh1li"]
+resource_name = "floating"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.0001),
+"transitions": PackedFloat32Array(1, 0.277393, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -2.49494), Vector2(0, -1.55934)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jkqvk"]
+_data = {
+"dropping": SubResource("Animation_p3g3g"),
+"floating": SubResource("Animation_mh1li")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_ge3e6"]
+font = ExtResource("4_hkwvs")
+font_size = 50
+
+[node name="Pickable" type="Area2D"]
+scale = Vector2(3.20649, 3.20649)
+collision_layer = 8
+script = ExtResource("1_288jd")
+type = -1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.190751, 0.190751)
+sprite_frames = SubResource("SpriteFrames_ll0xv")
+animation = &"hp_potion"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+scale = Vector2(0.153651, 0.153651)
+shape = SubResource("CircleShape2D_vo5gv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "floating"
+libraries = {
+"": SubResource("AnimationLibrary_jkqvk")
+}
+
+[node name="Cost" type="Label" parent="."]
+visible = false
+offset_left = -1.24747
+offset_top = 3.11868
+offset_right = 50.7525
+offset_bottom = 57.1187
+scale = Vector2(0.0441392, 0.0441392)
+text = "0
+"
+label_settings = SubResource("LabelSettings_ge3e6")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

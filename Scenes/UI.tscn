@@ -1,0 +1,101 @@
+[gd_scene load_steps=12 format=3 uid="uid://bo80n1q4446kf"]
+
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_aq7lj"]
+[ext_resource type="Texture2D" uid="uid://dsrqesnqk52m6" path="res://Assets/Retro Inventory/Original/Hearts_Red_1.png" id="1_mteku"]
+[ext_resource type="Texture2D" uid="uid://iscwsu2f431j" path="res://Assets/objects/MonedaD.png" id="3_k4k33"]
+[ext_resource type="FontFile" uid="uid://mauvi3vqxtnb" path="res://Assets/fonts/EightBits.ttf" id="4_lsh6n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc555"]
+atlas = ExtResource("3_k4k33")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j4av"]
+atlas = ExtResource("3_k4k33")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30xei"]
+atlas = ExtResource("3_k4k33")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pwyc"]
+atlas = ExtResource("3_k4k33")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvbnb"]
+atlas = ExtResource("3_k4k33")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_irshp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pc555")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j4av")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30xei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pwyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvbnb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1veok"]
+font = ExtResource("4_lsh6n")
+font_size = 80
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aq7lj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_right = 200.0
+offset_bottom = 40.0
+scale = Vector2(3, 3)
+size_flags_vertical = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="HP" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HP"]
+layout_mode = 2
+texture = ExtResource("1_mteku")
+expand_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer"]
+position = Vector2(1029, 72)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_irshp")
+
+[node name="CoinsNumber" type="Label" parent="CanvasLayer"]
+offset_left = 1070.0
+offset_top = 30.0
+offset_right = 1110.0
+offset_bottom = 113.0
+size_flags_vertical = 8
+text = "0"
+label_settings = SubResource("LabelSettings_1veok")
+
+[node name="StatusContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_left = 30.0
+offset_top = 474.0
+offset_right = 220.0
+offset_bottom = 504.0
+scale = Vector2(0.112223, 0.112223)

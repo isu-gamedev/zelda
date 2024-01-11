@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://qem6q07roxre"]
+
+[ext_resource type="Script" path="res://Scripts/chest.gd" id="1_6pvs2"]
+[ext_resource type="Texture2D" uid="uid://wcblgcfjukrt" path="res://Assets/objects/chest_01.png" id="1_d5qqr"]
+[ext_resource type="PackedScene" uid="uid://c4em773mjfi4y" path="res://Scenes/HpComponent.tscn" id="3_xl5cr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opx0f"]
+atlas = ExtResource("1_d5qqr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e148q"]
+atlas = ExtResource("1_d5qqr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcf15"]
+atlas = ExtResource("1_d5qqr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7lp7"]
+atlas = ExtResource("1_d5qqr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klkwl"]
+atlas = ExtResource("1_d5qqr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vfpdt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opx0f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e148q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcf15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7lp7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klkwl")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgvjl"]
+size = Vector2(15, 7)
+
+[sub_resource type="Animation" id="Animation_35qux"]
+resource_name = "shake"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dmdek"]
+_data = {
+"shake": SubResource("Animation_35qux")
+}
+
+[node name="Chest" type="StaticBody2D"]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+collision_layer = 7
+script = ExtResource("1_6pvs2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vfpdt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_vgvjl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dmdek")
+}
+
+[node name="HpComponent" parent="." instance=ExtResource("3_xl5cr")]
+maxHp = 1
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
+[connection signal="char_dead" from="HpComponent" to="." method="_on_hp_component_char_dead"]

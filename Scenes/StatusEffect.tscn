@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm1n1aghxm4io"]
+
+[ext_resource type="Script" path="res://Scripts/statusEffect.gd" id="1_fnr0i"]
+[ext_resource type="PackedScene" uid="uid://ce6v3b34aba8j" path="res://Scenes/StatusProgress.tscn" id="2_akxrt"]
+
+[node name="StatusEffect" type="Node2D"]
+script = ExtResource("1_fnr0i")
+
+[node name="ProgressBar" parent="." instance=ExtResource("2_akxrt")]
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
